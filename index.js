@@ -12,9 +12,8 @@ fs.readFile("./txt/start.txt", "utf-8", (err, data) => {
   if (err) {
     console.log(err.message);
   } else {
-    const read = fs.readFile(`./txt/${data}.txt`, "utf-8", (err, data) =>
-      err ? err.message : data
-    );
-    console.log(read);
+    fs.readFile(`./txt/${data}.txt`, "utf-8", (err, data) => {
+      err ? console.log(err.message) : console.log(data);
+    });
   }
 });

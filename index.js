@@ -8,6 +8,7 @@ const fs = require("fs");
 // console.log(fs.readFileSync("./txt/output.txt", "utf-8"));
 
 // Non-blocking, asynchronous way
+
 fs.readFile("./txt/start.txt", "utf-8", (err, data) => {
   if (err) {
     console.log(err.message);

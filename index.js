@@ -1,4 +1,9 @@
 const fs = require("fs");
+const http = require("http");
+const url = require("url");
+
+//////////////////////////////////
+// File reading and writing
 
 // Blocking, synchronous way
 // const textIn = fs.readFileSync("./txt/input.txt", "utf-8");
@@ -17,4 +22,16 @@ fs.readFile("./txt/start.txt", "utf-8", (err, data) => {
       err ? console.log(err.message) : console.log(data);
     });
   }
+});
+
+//////////////////////////////////
+// SERVER
+
+const server = http.createServer((req, res) => {
+  req.url;
+  res.end("hello from the server");
+});
+
+server.listen(3000, () => {
+  console.log("server is running on port 3000");
 });

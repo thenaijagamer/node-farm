@@ -1,6 +1,6 @@
 const fs = require("fs");
 const http = require("http");
-const url = require("url");
+// const url = require("url");
 
 //////////////////////////////////
 // File reading and writing
@@ -14,21 +14,21 @@ const url = require("url");
 
 // Non-blocking, asynchronous way
 
-fs.readFile("./txt/start.txt", "utf-8", (err, data) => {
-  if (err) {
-    console.log(err.message);
-  } else {
-    fs.readFile(`./txt/${data}.txt`, "utf-8", (err, data) => {
-      err ? console.log(err.message) : console.log(data);
-    });
-  }
-});
+// fs.readFile("./txt/start.txt", "utf-8", (err, data) => {
+//   if (err) {
+//     console.log(err.message);
+//   } else {
+//     fs.readFile(`./txt/${data}.txt`, "utf-8", (err, data) => {
+//       err ? console.log(err.message) : console.log(data);
+//     });
+//   }
+// });
 
 //////////////////////////////////
 // SERVER
 
 const server = http.createServer((req, res) => {
-  req.url;
+  console.log(req.url);
   res.end("hello from the server");
 });
 

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const http = require("http");
-// const url = require("url");
+const url = require("url");
 
 //////////////////////////////////
 // File reading and writing
@@ -29,7 +29,15 @@ const http = require("http");
 
 const server = http.createServer((req, res) => {
   console.log(req.url);
-  res.end("hello from the server");
+  const pathName = req.url;
+  if (pathName == "/") {
+    res.end("this is the homepage");
+  } else if (pathName == "/product") {
+    res.end("This is the product page");
+  } else {
+    res.writeHead(404);
+    res.end("Page not found");
+  }
 });
 
 server.listen(3000, () => {

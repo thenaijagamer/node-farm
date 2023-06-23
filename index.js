@@ -1,5 +1,6 @@
 const fs = require("fs");
 const http = require("http");
+const url = require("url");
 
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const tempOverview = fs.readFileSync(
@@ -36,10 +37,10 @@ const objData = JSON.parse(data);
 // SERVER
 
 const server = http.createServer((req, res) => {
-  const pathName = req.url;
+  const { pathname, query } = url.parse(req.url, true);
 
   // OVERVIEW PAGE
-  if (pathName === "/" || pathName === "/overview") {
+  if (pathname === "/" || pathname === "/overview") {
     res.writeHead(200, {
       "Content-type": "text/html",
     });
@@ -48,14 +49,16 @@ const server = http.createServer((req, res) => {
     res.end(overviewPage);
 
     // PRODUCT PAGE
-  } else if (pathName == "/product") {
+  } else if (pathname === "/product") {
     res.writeHead(200, {
       "Content-type": "text/html",
     });
-    res.end(tempProduct);
+    const product = objData[query.id];
+    const productPage = replaceTemp(tempProduct, product);
+    res.end(productPage);
 
     // API
-  } else if (pathName == "/api") {
+  } else if (pathname == "/api") {
     res.writeHead(200, {
       "Content-type": "application/json",
     });

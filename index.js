@@ -1,6 +1,8 @@
 const fs = require("fs");
 const http = require("http");
 const url = require("url");
+const replaceTemp = require("./modules/replace-template");
+const slugify = require("slugify");
 
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const tempOverview = fs.readFileSync(
@@ -16,22 +18,11 @@ const tempProduct = fs.readFileSync(
   "utf-8"
 );
 
-const replaceTemp = (temp, product) => {
-  let output = temp.replace(/{%PRODUCTNAME%}/g, product.productName);
-  output = output.replace(/{%IMAGE%}/g, product.image);
-  output = output.replace(/{%PRODUCTNUTRIENTNAME%}/g, product.nutrient);
-  output = output.replace(/{%PRODUCTLOCATION%}/g, product.from);
-  output = output.replace(/{%PRICE%}/g, product.price);
-  output = output.replace(/{%QUANTITY%}/g, product.quantity);
-  output = output.replace(/{%ID%}/g, product.id);
-  output = output.replace(/{%PRODUCTDESCRIPTION%}/g, product.description);
-  product.organic
-    ? (output = output.replace(/{%NOTORGANIC%}/g, ""))
-    : (output = output.replace(/{%NOTORGANIC%}/g, "not-organic"));
-  return output;
-};
-
 const objData = JSON.parse(data);
+
+const slugs = objData.map((el) => slugify(el.productName, { lower: true }));
+
+console.log(slugs);
 
 //////////////////////////////////
 // SERVER
